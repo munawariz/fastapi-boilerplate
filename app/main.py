@@ -2,14 +2,17 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.core.config import settings
-from .database import engine
+from app.database import engine
 
 from article.routes import router as article_router
 from article import models as article_model
 
 
 def get_application():
-    article_model.Base.metadata.create_all(bind=engine)
+    try:
+        article_model.Base.metadata.create_all(bind=engine)
+    except:
+        print('Migration Error')
     _app = FastAPI(title=settings.PROJECT_NAME)
 
     _app.add_middleware(

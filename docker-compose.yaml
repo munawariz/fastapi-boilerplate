@@ -5,6 +5,8 @@ services:
     build: .
     env_file:
       - .env
+    environment:
+      - POSTGRES_SERVER=database
     ports:
       - "11000:8000"
 
